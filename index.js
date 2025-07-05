@@ -54,16 +54,17 @@ app.get("/expenses", async(req,res)=>{
     }
 })
 
-app.get("/expenses/:id", async(req,res)=>{
-    try {
-        const id=req.params.id
-        const find={_id:new ObjectId(id)}
-        const result=await ExpenseCollection.deleteOne(find)
-        res.send(result)
-    } catch (error) {
-        res.send({error:"error.message"})
-    }
-})
+app.delete("/expenses/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const find = { _id: new ObjectId(id) };
+    const result = await ExpenseCollection.deleteOne(find);
+    res.send(result);
+  } catch (error) {
+    res.send({ error: "error.message" }); 
+  }
+});
+
 
 
 

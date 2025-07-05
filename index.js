@@ -13,7 +13,7 @@ app.use(cors())
 
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://jobAssignment:jKxbrKJmrgQJuCeR@cluster0.0p516.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -48,6 +48,17 @@ app.post("/expenses", async(req,res)=>{
 app.get("/expenses", async(req,res)=>{
     try {
         const result=await ExpenseCollection.find().toArray()
+        res.send(result)
+    } catch (error) {
+        res.send({error:"error.message"})
+    }
+})
+
+app.get("/expenses/:id", async(req,res)=>{
+    try {
+        const id=req.params.id
+        const find={_id:new ObjectId(id)}
+        const result=await ExpenseCollection.deleteOne(find)
         res.send(result)
     } catch (error) {
         res.send({error:"error.message"})
